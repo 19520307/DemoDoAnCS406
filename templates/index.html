@@ -24,7 +24,7 @@
                 height: 100%;
                 overflow-x: scroll; 
                 /* background-image: url('https://i.pinimg.com/originals/17/f8/12/17f812d2231a12317e8ce9d2836949b5.jpg'); */
-                background-image: url('http://images.freecreatives.com/wp-content/uploads/2016/02/White-Glitter-Wallpaper-.jpg');
+                /* background-image: url('http://images.freecreatives.com/wp-content/uploads/2016/02/White-Glitter-Wallpaper-.jpg'); */
             }
 
         .header {
@@ -95,15 +95,19 @@
             font-size: 30px;
 
         }
-
-        
+        .result_2{
+            color:black;
+            padding: 10px;
+            margin: 15px;
+            font-size: 30px;
+        }
 
     </style>
 </head>
 
 <body>
 <div class='header'>
-    <!-- THẦY BÓI MÌ AI XEM BÓI MIỄN PHÍ ĐẦU NĂM -->
+    
     Dự đoán địa danh nổi tiếng của 3 nơi : Thành Phồ Hồ Chí Minh , Phú Yên , Ninh Thuận
 </div>
 <div class='content'>
@@ -119,9 +123,10 @@
     </div>
 
     <div class='result_part'>
-        {% if msg %}
+        {% if msg_1 %}
         <div class='result_title'><b>Kết quả là :  </div>
-        <div class='result_id'>{{ msg }}</div>
+        <div class='result_id'>{{ msg_1 }}</div>
+        <div class='result_2'>{{ msg_2 }}</div>
         {% endif %}
         {% if user_image %}
         <img src="{{url_for('static', filename=user_image)}}">
