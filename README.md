@@ -1,5 +1,5 @@
 # Mã nguồn ứng dụng
-# Nhóm CS114.L21AndCS114.L22.KHCL
+# Nhóm CS406.M11
 
 ## - Thành viên  :
 + Phan Trọng Hậu - 19520077
