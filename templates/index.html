@@ -101,7 +101,12 @@
             margin: 15px;
             font-size: 30px;
         }
-
+        .result_3{
+            color:black;
+            padding: 10px;
+            margin: 15px;
+            font-size: 30px;
+        }
     </style>
 </head>
 
@@ -127,6 +132,8 @@
         <div class='result_title'><b>Kết quả là :  </div>
         <div class='result_id'>{{ msg_1 }}</div>
         <div class='result_2'>{{ msg_2 }}</div>
+        <div class='result_3'>{{ msg_3 }}</div>
+
         {% endif %}
         {% if user_image %}
         <img src="{{url_for('static', filename=user_image)}}" width="500" height=auto>

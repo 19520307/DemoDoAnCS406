@@ -5,6 +5,7 @@ import  sys
 import os
 import numpy as np  
 import cv2
+import mahotas as mt
 import tensorflow as tf
 import keras
 from keras.preprocessing.image import  img_to_array, load_img  
@@ -43,12 +44,68 @@ def FineTuningVgg16(model,imagefile):
     # print(inv_map_classes[np.argmax(model_used.predict(np.array([display])))])
     return inv_map_classes[np.argmax(model.predict(np.array([display])))]
 # Khởi tạo Flask
+def fd_hu_moments(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    feature = cv2.HuMoments(cv2.moments(image)).flatten()
+    return feature
+
+# trích xuất đặc trưng  theo : Haralick Texture
+def fd_haralick(image):
+    # chuyển ảnh về dạng  grayscale
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # tính toán  chuyển thành vector haralick texture feature 
+    haralick = mt.features.haralick(gray).mean(axis=0)
+    # trả về kết quả 
+    return haralick
+
+# trích xuất đặc trưng theo : Color Histogram
+def fd_histogram(image, mask=None):
+    bins = 8
+    # chuyển ảnh về dạng HSV color-space
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    # tính toán ảnh về dạng Color Histogram
+    hist  = cv2.calcHist([image], [0, 1, 2], None, [bins, bins, bins], [0, 256, 0, 256, 0, 256])
+    # normalize về dạng histogram
+    cv2.normalize(hist, hist)
+    return hist.flatten()
+from sklearn import preprocessing as pp
+def preTrainImage_1(image):
+    
+    fv_hu_moments = fd_hu_moments(image)
+    fv_haralick   = fd_haralick(image)
+    fv_histogram  = fd_histogram(image)
+    # kết hợp các cách trích xuất 
+    feature = np.hstack([fv_histogram, fv_hu_moments, fv_haralick])
+    return feature
+    
+def loadData_1(link):
+  X  = []
+  
+  
+# file_ = os.path.join(link_,file)
+          
+  image = cv2.imread(link)
+  X.append(preTrainImage_1(image))
+          # y.append(label)
+
+  scaler = pp.MinMaxScaler()
+  rescaled_features = scaler.fit_transform(X)
+  X = np.array(rescaled_features)
+  # y = np.array(y)
+  return X
+def Cach1(model,imagefile):
+  
+  X = loadData_1(imagefile)
+  return model.predict(X)[0]
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "static"
 
 filename = './Model/model_Logistic_Regression_vgg16.sav'
 model_Logistic_Regression_vgg16 = pickle.load(open(filename, 'rb'))
 vgg_16_saved_model = keras.models.load_model('./Model/vgg_16_saved_model.h5',custom_objects={'tf': tf})
+filename_1 = './Model/model_Logistic_Regression_cach_1.sav'
+model_Logistic_Regression_cach_1 = pickle.load(open(filename_1, 'rb'))
 
 
 # Hàm xử lý request
@@ -69,10 +126,15 @@ def home_page():
               if file_ == image_.filename:
                 res_model_Logistic_Regression_vgg16 = DuDoan1AnhVGG16(model_Logistic_Regression_vgg16,path_to_save)
                 res_vgg_16_saved_model = FineTuningVgg16(vgg_16_saved_model,path_to_save)
+                print(Cach1(model_Logistic_Regression_cach_1,path_to_save))
                 print(image_.filename)
                 print(res_model_Logistic_Regression_vgg16,res_vgg_16_saved_model)
+                res_model_Logistic_Regression_cach_1=  Cach1(model_Logistic_Regression_cach_1,path_to_save)
                 # return render_template("index.html", user_image = image.filename , result = res)
-                return render_template("index.html", msg_1 ="Features Extraction using VGG16 + Logistic Regression: " +  str(res_model_Logistic_Regression_vgg16) ,msg_2= "\nFine-tuning using VGG16: "+str(res_vgg_16_saved_model),user_image = image_.filename)
+                return render_template("index.html", msg_1 ="Features Extraction using VGG16 + Logistic Regression: " +  str(res_model_Logistic_Regression_vgg16) ,
+                msg_2= "\nFine-tuning using VGG16: "+str(res_vgg_16_saved_model),
+                msg_3 = "\nTrích xuất các đặc điểm + Logistic Regression:" + str(res_model_Logistic_Regression_cach_1),
+                user_image = image_.filename)
 
         
             
@@ -80,8 +142,12 @@ def home_page():
             image_.save(path_to_save)                                        
             res_model_Logistic_Regression_vgg16 = DuDoan1AnhVGG16(model_Logistic_Regression_vgg16,path_to_save)
             res_vgg_16_saved_model = FineTuningVgg16(vgg_16_saved_model,path_to_save)
-            return render_template("index.html",  msg_1 ="Features Extraction using VGG16 + Logistic Regression: " +  str(res_model_Logistic_Regression_vgg16) ,msg_2= "\nFine-tuning using VGG16: "+str(res_vgg_16_saved_model),user_image = image_.filename)
-
+            print(Cach1(model_Logistic_Regression_cach_1,path_to_save))
+            res_model_Logistic_Regression_cach_1=  Cach1(model_Logistic_Regression_cach_1,path_to_save)
+            return render_template("index.html", msg_1 ="Features Extraction using VGG16 + Logistic Regression: " +  str(res_model_Logistic_Regression_vgg16) ,
+                msg_2= "\nFine-tuning using VGG16: "+str(res_vgg_16_saved_model),
+                msg_3 = "\nTrích xuất các đặc điểm + Logistic Regression:" + str(res_model_Logistic_Regression_cach_1),
+                user_image = image_.filename)
 
     else:
         # Nếu là GET thì hiển thị giao diện upload
