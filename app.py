@@ -103,8 +103,8 @@ app.config['UPLOAD_FOLDER'] = "static"
 
 filename = './Model/model_Logistic_Regression_vgg16.sav'
 model_Logistic_Regression_vgg16 = pickle.load(open(filename, 'rb'))
-vgg_16_saved_model = keras.models.load_model('./Model/vgg_16_saved_model.h5',custom_objects={'tf': tf})
-filename_1 = './Model/model_Logistic_Regression_cach_1.sav'
+vgg_16_saved_model = keras.models.load_model('./Model/vgg16_fine_tuning_model_lr_0_001.h5',custom_objects={'tf': tf})
+filename_1 = './Model/model_Logistic_Regression_1.sav'
 model_Logistic_Regression_cach_1 = pickle.load(open(filename_1, 'rb'))
 
 
