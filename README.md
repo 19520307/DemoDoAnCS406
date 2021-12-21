@@ -23,6 +23,7 @@
 
 ```python
    pip install -r requirements.txt 
+   pip install numpy --upgrade   
 ```
 
 
