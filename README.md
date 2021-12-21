@@ -12,7 +12,7 @@
     git clone https://github.com/hauphanlvc/DemoDoAnCS406.git
     cd DemoDoAnCS406
 ```
-## Tiếp đó ,ta tạo môi trường ảo bằng lệnh này :
+## Tiếp đó ,ta unzip file Model.zip và tạo môi trường ảo bằng lệnh này :
 
 ```python
     python -m virtualenv venv   
