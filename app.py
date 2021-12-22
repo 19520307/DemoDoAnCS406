@@ -87,17 +87,36 @@ def loadData_1(link):
   image = cv2.imread(link)
   X.append(preTrainImage_1(image))
           # y.append(label)
-
+  X = np.asarray(X)
   scaler = pp.MinMaxScaler()
-  rescaled_features = scaler.fit_transform(X)
+  rescaled_features = scaler.fit_transform(X[:, np.newaxis])
   X = np.array(rescaled_features)
   # y = np.array(y)
+  print(X)
   return X
-def Cach1(model,imagefile):
-  
-  X = loadData_1(imagefile)
-  return model.predict(X)[0]
+def Cach1(model,file):
+    # X  = []
+    from sklearn.preprocessing import MinMaxScaler
 
+    image = cv2.imread(file)
+
+    # resize the image
+    # image = cv2.resize(image, tuple((500, 500)))
+
+   
+    global_feature = preTrainImage_1(image)
+    # np.hstack([fv_histogram, fv_haralick, fv_hu_moments])
+    global_feature = np.array([global_feature])
+    # print(global_feature.shape)
+    global_feature = global_feature.reshape(-1,1)
+    
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    rescaled_feature = scaler.fit_transform(global_feature)
+    # print(rescaled_feature)
+
+    prediction = model.predict(rescaled_feature.reshape(1,-1))[0]
+
+    return prediction
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "static"
 
