@@ -39,3 +39,5 @@ chọn vào link http trên có dạng là : (trong ví dụ là http://127.0.0.
 
         http://localhost:5000
 ```
+## Các địa điểm được sử dụng:
+## Kết quả demo
