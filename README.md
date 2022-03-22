@@ -41,5 +41,6 @@ chọn vào link http trên có dạng là : (trong ví dụ là http://127.0.0.
 
         http://localhost:5000
 ```
-## Các địa điểm được sử dụng: python![place](https://user-images.githubusercontent.com/68191047/159453954-121f6e48-ad95-4b29-8688-101cf367f7e6.png)
-## Kết quả demo
+## Web demo:![demo](https://user-images.githubusercontent.com/68191047/159455879-bb302558-f4b9-46b8-8391-50781576ca50.png)
+## Các địa điểm được sử dụng: ![place](https://user-images.githubusercontent.com/68191047/159453954-121f6e48-ad95-4b29-8688-101cf367f7e6.png)
+
