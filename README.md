@@ -16,6 +16,7 @@
 
 ```python
     python -m virtualenv venv   
+
     source venv/bin/activate
 ```
 
@@ -39,5 +40,5 @@ chọn vào link http trên có dạng là : (trong ví dụ là http://127.0.0.
 
         http://localhost:5000
 ```
-## Các địa điểm được sử dụng:
+## Các địa điểm được sử dụng: ![place](https://user-images.githubusercontent.com/68191047/159453509-448c2343-aa89-4e89-b9ef-bf0c8a2b966a.png)
 ## Kết quả demo
