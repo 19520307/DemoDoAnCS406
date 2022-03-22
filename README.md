@@ -22,7 +22,8 @@
 
 ## Tiếp theo , cài đặt các thư viện cần thiết:
 
-```python
+```
+
    pip install -r requirements.txt 
    pip install numpy --upgrade   
 ```
@@ -40,5 +41,5 @@ chọn vào link http trên có dạng là : (trong ví dụ là http://127.0.0.
 
         http://localhost:5000
 ```
-## Các địa điểm được sử dụng: ![place](https://user-images.githubusercontent.com/68191047/159453509-448c2343-aa89-4e89-b9ef-bf0c8a2b966a.png)
+## Các địa điểm được sử dụng: python![place](https://user-images.githubusercontent.com/68191047/159453954-121f6e48-ad95-4b29-8688-101cf367f7e6.png)
 ## Kết quả demo
